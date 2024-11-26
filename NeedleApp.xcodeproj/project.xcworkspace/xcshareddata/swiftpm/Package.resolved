@@ -1,0 +1,15 @@
+{
+  "originHash" : "f448e2e3264f766d49b9cc90d02066f141bf64f25bf0c792c6866fdd4b932d93",
+  "pins" : [
+    {
+      "identity" : "needle",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/uber/needle",
+      "state" : {
+        "branch" : "master",
+        "revision" : "4f43ec612307012b34664b9e95ac680c75622906"
+      }
+    }
+  ],
+  "version" : 3
+}

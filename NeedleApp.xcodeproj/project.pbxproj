@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C8E181362CF61666007EB127 /* NeedleFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C8E181352CF61666007EB127 /* NeedleFoundation */; };
+		C8E181382CF61666007EB127 /* NeedleFoundationTest in Frameworks */ = {isa = PBXBuildFile; productRef = C8E181372CF61666007EB127 /* NeedleFoundationTest */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		C8E1811C2CF61631007EB127 /* NeedleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeedleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E181382CF61666007EB127 /* NeedleFoundationTest in Frameworks */,
+				C8E181362CF61666007EB127 /* NeedleFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8E1812F2CF61633007EB127 /* Build configuration list for PBXNativeTarget "NeedleApp" */;
 			buildPhases = (
+				C8E181502CF622BF007EB127 /* Needle  */,
 				C8E181182CF61631007EB127 /* Sources */,
 				C8E181192CF61631007EB127 /* Frameworks */,
 				C8E1811A2CF61631007EB127 /* Resources */,
@@ -78,6 +86,8 @@
 			);
 			name = NeedleApp;
 			packageProductDependencies = (
+				C8E181352CF61666007EB127 /* NeedleFoundation */,
+				C8E181372CF61666007EB127 /* NeedleFoundationTest */,
 			);
 			productName = NeedleApp;
 			productReference = C8E1811C2CF61631007EB127 /* NeedleApp.app */;
@@ -107,6 +117,9 @@
 			);
 			mainGroup = C8E181132CF61631007EB127;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C8E181342CF61666007EB127 /* XCRemoteSwiftPackageReference "needle" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C8E1811D2CF61631007EB127 /* Products */;
 			projectDirPath = "";
@@ -126,6 +139,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C8E181502CF622BF007EB127 /* Needle  */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Needle ";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/opt/homebrew/bin/needle generate NeedleApp/NeedleGenerated.swift NeedleApp/\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C8E181182CF61631007EB127 /* Sources */ = {
@@ -231,7 +265,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -294,7 +328,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -335,6 +369,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C8E181342CF61666007EB127 /* XCRemoteSwiftPackageReference "needle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uber/needle";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C8E181352CF61666007EB127 /* NeedleFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C8E181342CF61666007EB127 /* XCRemoteSwiftPackageReference "needle" */;
+			productName = NeedleFoundation;
+		};
+		C8E181372CF61666007EB127 /* NeedleFoundationTest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C8E181342CF61666007EB127 /* XCRemoteSwiftPackageReference "needle" */;
+			productName = NeedleFoundationTest;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C8E181142CF61631007EB127 /* Project object */;
 }
