@@ -7,17 +7,17 @@
 
 import UIKit
 
-protocol SecondScreenRouterInterface: AnyObject {
+protocol ISecondScreenRouter: AnyObject {
     func popBack()
     func goNext()
 }
 
-final class SecondScreenRouter: SecondScreenRouterInterface {
-    private let thirdScreenFactory: ThirdScreenFactory
+final class SecondScreenRouter: ISecondScreenRouter {
+    private let thirdScreenAssembly: IThirdScreenAssembly
     weak var fromVC: UIViewController?
 
-    init(thirdScreenFactory: ThirdScreenFactory) {
-        self.thirdScreenFactory = thirdScreenFactory
+    init(thirdScreenAssembly: IThirdScreenAssembly) {
+        self.thirdScreenAssembly = thirdScreenAssembly
     }
 
     func popBack() {
@@ -25,7 +25,7 @@ final class SecondScreenRouter: SecondScreenRouterInterface {
     }
 
     func goNext() {
-        let vc = thirdScreenFactory.makeThirdScreen(with: .dark)
+        let vc = thirdScreenAssembly.createThirdScreen()
         fromVC?.navigationController?.pushViewController(vc, animated: true)
     }
 }

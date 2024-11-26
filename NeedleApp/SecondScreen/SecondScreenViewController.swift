@@ -7,20 +7,18 @@
 
 import UIKit
 
-protocol SecondScreenViewInterface: AnyObject {}
-
 final class SecondScreenViewController: UIViewController {
 
     private let theme: UIUserInterfaceStyle
-    private let presenter: SecondScreenPresenterInterface
+    private let presenter: ISecondScreenPresenter
 
     private let requestButton = UIButton()
     private let nextButton = UIButton()
     private let popbackButton = UIButton()
 
     init(
-        themeProvider: ThemeProvider,
-        presenter: SecondScreenPresenterInterface
+        themeProvider: IThemeProvider,
+        presenter: ISecondScreenPresenter
     ) {
         self.theme = themeProvider.theme
         self.presenter = presenter
@@ -51,10 +49,6 @@ final class SecondScreenViewController: UIViewController {
             presenter.backButtonTapped()
         }
     }
-}
-
-extension SecondScreenViewController: SecondScreenViewInterface {
-
 }
 
 private extension SecondScreenViewController {

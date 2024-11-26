@@ -7,20 +7,18 @@
 
 import UIKit
 
-protocol ThirdScreenViewInterface: AnyObject {}
-
 final class ThirdScreenViewController: UIViewController {
 
     private let theme: UIUserInterfaceStyle
-    private let presenter: ThirdScreenPresenterInterface
+    private let presenter: IThirdScreenPresenter
 
     private let logButton = UIButton()
     private let requestButton = UIButton()
     private let popbackButton = UIButton()
 
     init(
-        themeProvider: ThemeProvider,
-        presenter: ThirdScreenPresenterInterface
+        themeProvider: IThemeProvider,
+        presenter: IThirdScreenPresenter
     ) {
         self.theme = themeProvider.theme
         self.presenter = presenter
@@ -51,10 +49,6 @@ final class ThirdScreenViewController: UIViewController {
             presenter.backButtonTapped()
         }
     }
-}
-
-extension ThirdScreenViewController: ThirdScreenViewInterface {
-
 }
 
 private extension ThirdScreenViewController {

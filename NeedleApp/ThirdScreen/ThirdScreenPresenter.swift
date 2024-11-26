@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ThirdScreenPresenterInterface: AnyObject {
+protocol IThirdScreenPresenter: AnyObject {
     func viewDidLoad()
 
     func backButtonTapped()
@@ -15,18 +15,16 @@ protocol ThirdScreenPresenterInterface: AnyObject {
     func logButtonTapped()
 }
 
-final class ThirdScreenPresenterImpl: ThirdScreenPresenterInterface {
+final class ThirdScreenPresenter: IThirdScreenPresenter {
 
-    private let router: ThirdScreenRouterInterface
-    private let loggerService: LoggerServiceInterface
-    private let networkService: NetworkServiceInterface
-
-    weak var view: ThirdScreenViewInterface?
+    private let router: IThirdScreenRouter
+    private let loggerService: ILoggerService
+    private let networkService: INetworkService
 
     init(
-        router: ThirdScreenRouterInterface,
-        loggerService: LoggerServiceInterface,
-        networkService: NetworkServiceInterface
+        router: IThirdScreenRouter,
+        loggerService: ILoggerService,
+        networkService: INetworkService
     ) {
         self.router = router
         self.loggerService = loggerService
@@ -48,5 +46,4 @@ final class ThirdScreenPresenterImpl: ThirdScreenPresenterInterface {
     func requestButtonTapped() {
         print(">>> network request")
     }
-
 }

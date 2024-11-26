@@ -7,21 +7,21 @@
 
 import UIKit
 
-protocol FirstScreenRouterInterface: AnyObject {
+protocol IFirstScreenRouter: AnyObject {
     func showSecondScreen()
 }
 
-final class FirstScreenRouter: FirstScreenRouterInterface {
-    private let secondScreenFactory: SecondScreenFactory
+final class FirstScreenRouter: IFirstScreenRouter {
+    private let secondScreenAssembly: ISecondScreenAssembly
     
     weak var fromVC: UIViewController?
     
-    init(secondScreenFactory: SecondScreenFactory) {
-        self.secondScreenFactory = secondScreenFactory
+    init(secondScreenAssembly: ISecondScreenAssembly) {
+        self.secondScreenAssembly = secondScreenAssembly
     }
     
     func showSecondScreen() {
-        let vc2 = secondScreenFactory.makeSecondScreen()
+        let vc2 = secondScreenAssembly.createSecondScreen()
         fromVC?.navigationController?.pushViewController(vc2, animated: true)
     }
 }

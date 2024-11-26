@@ -7,23 +7,22 @@
 
 import Foundation
 
-protocol FirstScreenPresenterInterface: AnyObject {
+protocol IFirstScreenPresenter: AnyObject {
     func viewDidLoad()
     func button1Tapped()
     func button2Tapped()
 }
 
-final class FirstScreenPresenterImpl: FirstScreenPresenterInterface {
+final class FirstScreenPresenter: IFirstScreenPresenter {
 
-    private let router: FirstScreenRouterInterface
-    private let logger: LoggerServiceInterface
-    private let themeContainer: ThemeContainer
-    weak var view: FirstScreenViewInterface?
+    private let router: IFirstScreenRouter
+    private let logger: ILoggerService
+    private let themeContainer: IThemeContainer
 
     init(
-        router: FirstScreenRouterInterface,
-        logger: LoggerServiceInterface,
-        themeContainer: ThemeContainer
+        router: IFirstScreenRouter,
+        logger: ILoggerService,
+        themeContainer: IThemeContainer
     ) {
         self.router = router
         self.logger = logger

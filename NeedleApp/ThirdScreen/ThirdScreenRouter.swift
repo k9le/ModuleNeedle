@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol ThirdScreenRouterInterface: AnyObject {
+protocol IThirdScreenRouter: AnyObject {
     func popBack()
 }
 
-final class ThirdScreenRouter: ThirdScreenRouterInterface {
+final class ThirdScreenRouter: IThirdScreenRouter {
     weak var fromVC: UIViewController?
 
     func popBack() {

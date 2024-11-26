@@ -7,19 +7,17 @@
 
 import UIKit
 
-protocol FirstScreenViewInterface: AnyObject {}
-
 final class FirstScreenViewController: UIViewController {
 
-    private var appearance: FirstScreenAppearance
-    private var presenter: FirstScreenPresenterInterface
+    private var appearance: IFirstScreenAppearance
+    private var presenter: IFirstScreenPresenter
 
     private let button1 = UIButton()
     private let button2 = UIButton()
 
     init(
-        appearance: any FirstScreenAppearance,
-        presenter: any FirstScreenPresenterInterface
+        appearance: any IFirstScreenAppearance,
+        presenter: any IFirstScreenPresenter
     ) {
         self.appearance = appearance
         self.presenter = presenter
@@ -50,11 +48,6 @@ final class FirstScreenViewController: UIViewController {
         }
     }
 }
-
-extension FirstScreenViewController: FirstScreenViewInterface {
-
-}
-
 
 private extension FirstScreenViewController {
 

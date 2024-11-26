@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol SecondScreenPresenterInterface: AnyObject {
+protocol ISecondScreenPresenter: AnyObject {
     func viewDidLoad()
 
     func backButtonTapped()
@@ -15,21 +15,19 @@ protocol SecondScreenPresenterInterface: AnyObject {
     func nextScreenTapped()
 }
 
-final class SecondScreenPresenterImpl: SecondScreenPresenterInterface {
+final class SecondScreenPresenter: ISecondScreenPresenter {
 
-    private let router: SecondScreenRouterInterface
-    private let persistenceService: PersistenceServiceInterface
-    private let networkService: NetworkServiceInterface
+    private let router: ISecondScreenRouter
+    private let persistenceService: IPersistenceService
+    private let networkService: INetworkService
 
-    private let loggerService: LoggerServiceInterface
-
-    weak var view: SecondScreenViewInterface?
+    private let loggerService: ILoggerService
 
     init(
-        router: SecondScreenRouterInterface,
-        networkService: NetworkServiceInterface,
-        persistenceService: PersistenceServiceInterface,
-        loggerService: LoggerServiceInterface
+        router: ISecondScreenRouter,
+        networkService: INetworkService,
+        persistenceService: IPersistenceService,
+        loggerService: ILoggerService
     ) {
         self.router = router
         self.networkService = networkService

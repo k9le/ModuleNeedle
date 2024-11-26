@@ -12,72 +12,66 @@ private func parent1(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
     return component.parent
 }
 
-private func parent2(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Scope {
-    return component.parent.parent
-}
-
 // MARK: - Providers
 
 #if !NEEDLE_DYNAMIC
 
-private class ThirdScreenDependency7368f602604eacc72275Provider: ThirdScreenDependency {
-    var loggerService: LoggerServiceInterface {
-        return firstScreenNeedleAssembly.loggerService
+private class ThirdScreenDependencyfcb97afcf7ee78a0cc28Provider: ThirdScreenDependency {
+    var loggerService: ILoggerService {
+        return secondScreenDIComponent.loggerService
     }
-    var networkService: NetworkServiceInterface {
-        return secondScreenNeedle.networkService
+    var networkService: INetworkService {
+        return secondScreenDIComponent.networkService
     }
-    var themeProvider: ThemeProvider {
-        return firstScreenNeedleAssembly.themeProvider
+    var themeProvider: IThemeProvider {
+        return secondScreenDIComponent.themeProvider
     }
-    private let firstScreenNeedleAssembly: FirstScreenNeedleAssembly
-    private let secondScreenNeedle: SecondScreenNeedle
-    init(firstScreenNeedleAssembly: FirstScreenNeedleAssembly, secondScreenNeedle: SecondScreenNeedle) {
-        self.firstScreenNeedleAssembly = firstScreenNeedleAssembly
-        self.secondScreenNeedle = secondScreenNeedle
+    private let secondScreenDIComponent: SecondScreenDIComponent
+    init(secondScreenDIComponent: SecondScreenDIComponent) {
+        self.secondScreenDIComponent = secondScreenDIComponent
     }
 }
-/// ^->FirstScreenNeedleAssembly->SecondScreenNeedle->ThirdScreenNeedle
-private func factoryffe0ee328e7dc0542d09794d51dbda8ecb70f3fc(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return ThirdScreenDependency7368f602604eacc72275Provider(firstScreenNeedleAssembly: parent2(component) as! FirstScreenNeedleAssembly, secondScreenNeedle: parent1(component) as! SecondScreenNeedle)
+/// ^->FirstScreenDIComponent->SecondScreenDIComponent->ThirdScreenDIComponent
+private func factory0654947c66ecbf31aa81d40058910c2b637dafa6(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ThirdScreenDependencyfcb97afcf7ee78a0cc28Provider(secondScreenDIComponent: parent1(component) as! SecondScreenDIComponent)
 }
-private class SecondScreenDependencyb2ab224febbc3009aaffProvider: SecondScreenDependency {
-    var loggerService: LoggerServiceInterface {
-        return firstScreenNeedleAssembly.loggerService
+private class SecondScreenDependencya0e67d7b4d679524ae39Provider: SecondScreenDependency {
+    var loggerService: ILoggerService {
+        return firstScreenDIComponent.loggerService
     }
-    var themeProvider: ThemeProvider {
-        return firstScreenNeedleAssembly.themeProvider
+    var themeProvider: IThemeProvider {
+        return firstScreenDIComponent.themeProvider
     }
-    private let firstScreenNeedleAssembly: FirstScreenNeedleAssembly
-    init(firstScreenNeedleAssembly: FirstScreenNeedleAssembly) {
-        self.firstScreenNeedleAssembly = firstScreenNeedleAssembly
+    private let firstScreenDIComponent: FirstScreenDIComponent
+    init(firstScreenDIComponent: FirstScreenDIComponent) {
+        self.firstScreenDIComponent = firstScreenDIComponent
     }
 }
-/// ^->FirstScreenNeedleAssembly->SecondScreenNeedle
-private func factoryc7a98a3fe348dd8631d9d86ad5ee029c4cfa48fb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return SecondScreenDependencyb2ab224febbc3009aaffProvider(firstScreenNeedleAssembly: parent1(component) as! FirstScreenNeedleAssembly)
+/// ^->FirstScreenDIComponent->SecondScreenDIComponent
+private func factory508a254d8b222fbd0046583ce0fb2485c2d4f561(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SecondScreenDependencya0e67d7b4d679524ae39Provider(firstScreenDIComponent: parent1(component) as! FirstScreenDIComponent)
 }
 
 #else
-extension ThirdScreenNeedle: NeedleFoundation.Registration {
+extension ThirdScreenDIComponent: NeedleFoundation.Registration {
     public func registerItems() {
-        keyPathToName[\ThirdScreenDependency.loggerService] = "loggerService-LoggerServiceInterface"
-        keyPathToName[\ThirdScreenDependency.networkService] = "networkService-NetworkServiceInterface"
-        keyPathToName[\ThirdScreenDependency.themeProvider] = "themeProvider-ThemeProvider"
+        keyPathToName[\ThirdScreenDependency.loggerService] = "loggerService-ILoggerService"
+        keyPathToName[\ThirdScreenDependency.networkService] = "networkService-INetworkService"
+        keyPathToName[\ThirdScreenDependency.themeProvider] = "themeProvider-IThemeProvider"
     }
 }
-extension FirstScreenNeedleAssembly: NeedleFoundation.Registration {
+extension FirstScreenDIComponent: NeedleFoundation.Registration {
     public func registerItems() {
 
-        localTable["loggerService-LoggerServiceInterface"] = { [unowned self] in self.loggerService as Any }
-        localTable["themeProvider-ThemeProvider"] = { [unowned self] in self.themeProvider as Any }
+        localTable["loggerService-ILoggerService"] = { [unowned self] in self.loggerService as Any }
+        localTable["themeProvider-IThemeProvider"] = { [unowned self] in self.themeProvider as Any }
     }
 }
-extension SecondScreenNeedle: NeedleFoundation.Registration {
+extension SecondScreenDIComponent: NeedleFoundation.Registration {
     public func registerItems() {
-        keyPathToName[\SecondScreenDependency.loggerService] = "loggerService-LoggerServiceInterface"
-        keyPathToName[\SecondScreenDependency.themeProvider] = "themeProvider-ThemeProvider"
-        localTable["networkService-NetworkServiceInterface"] = { [unowned self] in self.networkService as Any }
+        keyPathToName[\SecondScreenDependency.loggerService] = "loggerService-ILoggerService"
+        keyPathToName[\SecondScreenDependency.themeProvider] = "themeProvider-IThemeProvider"
+        localTable["networkService-INetworkService"] = { [unowned self] in self.networkService as Any }
     }
 }
 
@@ -96,9 +90,9 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 #if !NEEDLE_DYNAMIC
 
 @inline(never) private func register1() {
-    registerProviderFactory("^->FirstScreenNeedleAssembly->SecondScreenNeedle->ThirdScreenNeedle", factoryffe0ee328e7dc0542d09794d51dbda8ecb70f3fc)
-    registerProviderFactory("^->FirstScreenNeedleAssembly", factoryEmptyDependencyProvider)
-    registerProviderFactory("^->FirstScreenNeedleAssembly->SecondScreenNeedle", factoryc7a98a3fe348dd8631d9d86ad5ee029c4cfa48fb)
+    registerProviderFactory("^->FirstScreenDIComponent->SecondScreenDIComponent->ThirdScreenDIComponent", factory0654947c66ecbf31aa81d40058910c2b637dafa6)
+    registerProviderFactory("^->FirstScreenDIComponent", factoryEmptyDependencyProvider)
+    registerProviderFactory("^->FirstScreenDIComponent->SecondScreenDIComponent", factory508a254d8b222fbd0046583ce0fb2485c2d4f561)
 }
 #endif
 
