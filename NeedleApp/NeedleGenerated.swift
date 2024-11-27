@@ -1,5 +1,6 @@
 
 
+import Foundation
 import NeedleFoundation
 import UIKit
 
@@ -16,7 +17,7 @@ private func parent1(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
 
 #if !NEEDLE_DYNAMIC
 
-private class ThirdScreenDependencyfcb97afcf7ee78a0cc28Provider: ThirdScreenDependency {
+private class ThirdScreenDependency6a9302d262bd51c26a01Provider: ThirdScreenDependency {
     var loggerService: ILoggerService {
         return secondScreenDIComponent.loggerService
     }
@@ -31,25 +32,44 @@ private class ThirdScreenDependencyfcb97afcf7ee78a0cc28Provider: ThirdScreenDepe
         self.secondScreenDIComponent = secondScreenDIComponent
     }
 }
-/// ^->FirstScreenDIComponent->SecondScreenDIComponent->ThirdScreenDIComponent
-private func factory0654947c66ecbf31aa81d40058910c2b637dafa6(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return ThirdScreenDependencyfcb97afcf7ee78a0cc28Provider(secondScreenDIComponent: parent1(component) as! SecondScreenDIComponent)
+/// ^->RootComponent->SecondScreenDIComponent->ThirdScreenDIComponent
+private func factory2b7b2055da55e64afb6fd40058910c2b637dafa6(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ThirdScreenDependency6a9302d262bd51c26a01Provider(secondScreenDIComponent: parent1(component) as! SecondScreenDIComponent)
 }
-private class SecondScreenDependencya0e67d7b4d679524ae39Provider: SecondScreenDependency {
+private class FirstScreenDependencye88e0e1cb5014a20383dProvider: FirstScreenDependency {
     var loggerService: ILoggerService {
-        return firstScreenDIComponent.loggerService
+        return rootComponent.loggerService
+    }
+    var themeContainer: IThemeContainer {
+        return rootComponent.themeContainer
+    }
+    var secondScreenAssembly: ISecondScreenAssembly {
+        return rootComponent.secondScreenAssembly
+    }
+    private let rootComponent: RootComponent
+    init(rootComponent: RootComponent) {
+        self.rootComponent = rootComponent
+    }
+}
+/// ^->RootComponent->FirstScreenDIComponent
+private func factory34033c84ca722fcd1187b3a8f24c1d289f2c0f2e(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return FirstScreenDependencye88e0e1cb5014a20383dProvider(rootComponent: parent1(component) as! RootComponent)
+}
+private class SecondScreenDependency2658d773e87e411d8238Provider: SecondScreenDependency {
+    var loggerService: ILoggerService {
+        return rootComponent.loggerService
     }
     var themeProvider: IThemeProvider {
-        return firstScreenDIComponent.themeProvider
+        return rootComponent.themeProvider
     }
-    private let firstScreenDIComponent: FirstScreenDIComponent
-    init(firstScreenDIComponent: FirstScreenDIComponent) {
-        self.firstScreenDIComponent = firstScreenDIComponent
+    private let rootComponent: RootComponent
+    init(rootComponent: RootComponent) {
+        self.rootComponent = rootComponent
     }
 }
-/// ^->FirstScreenDIComponent->SecondScreenDIComponent
-private func factory508a254d8b222fbd0046583ce0fb2485c2d4f561(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return SecondScreenDependencya0e67d7b4d679524ae39Provider(firstScreenDIComponent: parent1(component) as! FirstScreenDIComponent)
+/// ^->RootComponent->SecondScreenDIComponent
+private func factory1e6950f089cb360950deb3a8f24c1d289f2c0f2e(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SecondScreenDependency2658d773e87e411d8238Provider(rootComponent: parent1(component) as! RootComponent)
 }
 
 #else
@@ -61,6 +81,13 @@ extension ThirdScreenDIComponent: NeedleFoundation.Registration {
     }
 }
 extension FirstScreenDIComponent: NeedleFoundation.Registration {
+    public func registerItems() {
+        keyPathToName[\FirstScreenDependency.loggerService] = "loggerService-ILoggerService"
+        keyPathToName[\FirstScreenDependency.themeContainer] = "themeContainer-IThemeContainer"
+        keyPathToName[\FirstScreenDependency.secondScreenAssembly] = "secondScreenAssembly-ISecondScreenAssembly"
+    }
+}
+extension RootComponent: NeedleFoundation.Registration {
     public func registerItems() {
 
         localTable["loggerService-ILoggerService"] = { [unowned self] in self.loggerService as Any }
@@ -90,9 +117,10 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 #if !NEEDLE_DYNAMIC
 
 @inline(never) private func register1() {
-    registerProviderFactory("^->FirstScreenDIComponent->SecondScreenDIComponent->ThirdScreenDIComponent", factory0654947c66ecbf31aa81d40058910c2b637dafa6)
-    registerProviderFactory("^->FirstScreenDIComponent", factoryEmptyDependencyProvider)
-    registerProviderFactory("^->FirstScreenDIComponent->SecondScreenDIComponent", factory508a254d8b222fbd0046583ce0fb2485c2d4f561)
+    registerProviderFactory("^->RootComponent->SecondScreenDIComponent->ThirdScreenDIComponent", factory2b7b2055da55e64afb6fd40058910c2b637dafa6)
+    registerProviderFactory("^->RootComponent->FirstScreenDIComponent", factory34033c84ca722fcd1187b3a8f24c1d289f2c0f2e)
+    registerProviderFactory("^->RootComponent", factoryEmptyDependencyProvider)
+    registerProviderFactory("^->RootComponent->SecondScreenDIComponent", factory1e6950f089cb360950deb3a8f24c1d289f2c0f2e)
 }
 #endif
 

@@ -13,9 +13,9 @@ protocol IFirstScreenAssembly {
 
 final class FirstScreenAssembly {
 
-    private let componentProvider: () -> IFirstScreenComponent
+    private let componentProvider: () -> IFirstScreenDIComponent
 
-    init(componentProvider: @escaping () -> IFirstScreenComponent) {
+    init(componentProvider: @escaping () -> IFirstScreenDIComponent) {
         self.componentProvider = componentProvider
     }
 }

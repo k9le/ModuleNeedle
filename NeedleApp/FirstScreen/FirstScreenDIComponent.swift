@@ -7,31 +7,26 @@
 
 import NeedleFoundation
 
-protocol IFirstScreenComponent {
+protocol FirstScreenDependency: Dependency {
     var loggerService: ILoggerService { get }
     var themeContainer: IThemeContainer { get }
-    var firstScreenAppearance: IFirstScreenAppearance { get }
     var secondScreenAssembly: ISecondScreenAssembly { get }
 }
 
-final class FirstScreenDIComponent: BootstrapComponent {}
+protocol IFirstScreenDIComponent: FirstScreenDependency {
+    var firstScreenAppearance: IFirstScreenAppearance { get }
+}
 
-extension FirstScreenDIComponent: IFirstScreenComponent {
+final class FirstScreenDIComponent: Component<FirstScreenDependency> {}
+
+extension FirstScreenDIComponent: IFirstScreenDIComponent {
 
     public var loggerService: ILoggerService {
-        shared {
-            LoggerService()
-        }
-    }
-
-    public var themeProvider: IThemeProvider {
-        themeContainer
+        dependency.loggerService
     }
 
     var themeContainer: IThemeContainer {
-        shared {
-            ThemeContainer()
-        }
+        dependency.themeContainer
     }
 
     var firstScreenAppearance: IFirstScreenAppearance {
@@ -39,8 +34,6 @@ extension FirstScreenDIComponent: IFirstScreenComponent {
     }
 
     var secondScreenAssembly: ISecondScreenAssembly {
-        SecondScreenAssembly {
-            SecondScreenDIComponent(parent: self)
-        }
+        dependency.secondScreenAssembly
     }
 }

@@ -24,11 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         self.window = window
 
-        let screen1VCFactory = FirstScreenAssembly {
-            FirstScreenDIComponent()
-        }
-
-        let screen1VC = screen1VCFactory.createFirstScreen()
+        let rootComponent = RootComponent()
+        let firstScreenAssembly = rootComponent.firstScreenAssembly
+        let screen1VC = firstScreenAssembly.createFirstScreen()
         window.rootViewController = UINavigationController(rootViewController: screen1VC)
     }
 
